@@ -26,7 +26,7 @@ API (Swagger): http://localhost:8000/docs
 
 ## Principais endpoints
 
-GET /fazendas/{id}
-GET /fazendas/cod-imovel/{cod_imovel}
-POST /fazendas/busca-ponto
-POST /fazendas/busca-raio
+1. GET /fazendas/{id}
+2. GET /fazendas/cod-imovel/{cod_imovel}
+3. POST /fazendas/busca-ponto
+4. POST /fazendas/busca-raio
