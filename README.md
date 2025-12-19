@@ -1,9 +1,14 @@
-# Buscando fazendas com dados geográficos
+# Busca de Fazendas com Dados Geoespaciais
 
-A aplicação utiliza **FastAPI + PostgreSQL/PostGIS** no backend e **React (Vite)** no frontend.  
-O sistema permite buscar fazendas por **ID**, **código do imóvel**, **ponto geográfico** ou **ponto geográfico + raio em quilômetros**.
+Aplicação full stack para consulta de fazendas utilizando **dados geoespaciais**, construída com:
 
-Todo o ambiente é orquestrado com **Docker Compose**, incluindo **seed automático** dos dados geográficos.
+- **Backend:** FastAPI + PostgreSQL/PostGIS  
+- **Frontend:** React (Vite)  
+- **Infraestrutura:** Docker + Docker Compose  
+
+O sistema permite buscar fazendas por **ID**, **código do imóvel**, **ponto geográfico** ou **ponto geográfico com raio em quilômetros**.
+
+Todo o ambiente é iniciado com um único comando, incluindo **seed automático dos dados geográficos**.
 
 ---
 
@@ -16,8 +21,13 @@ Todo o ambiente é orquestrado com **Docker Compose**, incluindo **seed automát
 
 ## Como rodar o projeto
 
-1. Clone o repositório
-2. Suba toda a aplicação com: `docker compose up --build`
+Clone o repositório:
+   ```bash
+   git clone <url-do-repositorio>
+   cd <nome-do-repositorio>
+   ```
+   Com a docker engine executando, execute:
+   ```docker compose up --build```
 
 ## Acessos
 
