@@ -44,4 +44,7 @@ Health check: http://localhost:8000/health
 3. POST /fazendas/busca-ponto
 4. POST /fazendas/busca-raio
 
+## PostGIS
+
 As queries utilizando o PostGIS estão em: ```fazendas_api/app/routers/fazendas.py```
+
