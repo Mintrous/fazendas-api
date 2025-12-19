@@ -23,8 +23,8 @@ Todo o ambiente é iniciado com um único comando, incluindo **seed automático 
 
 Clone o repositório:
    ```bash
-   git clone <url-do-repositorio>
-   cd <nome-do-repositorio>
+   git clone https://github.com/Mintrous/fazendas-api.git
+   cd fazendas-api
    ```
    Com a docker engine executando, execute:
    ```docker compose up --build```
@@ -32,7 +32,10 @@ Clone o repositório:
 ## Acessos
 
 Frontend: http://localhost:3000
+
 API (Swagger): http://localhost:8000/docs
+
+Health check: http://localhost:8000/health
 
 ## Principais endpoints
 
@@ -40,3 +43,5 @@ API (Swagger): http://localhost:8000/docs
 2. GET /fazendas/cod-imovel/{cod_imovel}
 3. POST /fazendas/busca-ponto
 4. POST /fazendas/busca-raio
+
+As queries utilizando o PostGIS estão em: ```fazendas_api/app/routers/fazendas.py```
