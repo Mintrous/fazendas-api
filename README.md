@@ -1,4 +1,4 @@
-# Farm Search with Geospatial Data
+# Farm search with geospatial data
 
 The application uses **FastAPI + PostgreSQL/PostGIS** in the backend and **React (Vite)** in the frontend.  
 The system allows searching for farms by **ID**, **property code**, **geographic point**, or **geographic point + radius in kilometers**.
@@ -31,3 +31,4 @@ GET /farms/{id}
 GET /farms/property-code/{property_code}
 POST /farms/search-point
 POST /farms/search-radius
+
