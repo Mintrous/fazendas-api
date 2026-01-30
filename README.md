@@ -1,32 +1,32 @@
-# Buscando fazendas com dados geográficos
+# Farm Search with Geospatial Data
 
-A aplicação utiliza **FastAPI + PostgreSQL/PostGIS** no backend e **React (Vite)** no frontend.  
-O sistema permite buscar fazendas por **ID**, **código do imóvel**, **ponto geográfico** ou **ponto geográfico + raio em quilômetros**.
+The application uses **FastAPI + PostgreSQL/PostGIS** in the backend and **React (Vite)** in the frontend.  
+The system allows searching for farms by **ID**, **property code**, **geographic point**, or **geographic point + radius in kilometers**.
 
-Todo o ambiente é orquestrado com **Docker Compose**, incluindo **seed automático** dos dados geográficos.
+The entire environment is orchestrated with **Docker Compose**, including **automatic seed** of geospatial data.
 
 ---
 
-## Pré-requisitos
+## Prerequisites
 
 - Docker
 - Docker Compose
 
 ---
 
-## Como rodar o projeto
+## How to run the project
 
-1. Clone o repositório
-2. Suba toda a aplicação com: `docker compose up --build`
+1. Clone the repository
+2. Start the entire application with: `docker compose up --build`
 
-## Acessos
+## Access
 
 Frontend: http://localhost:3000
 API (Swagger): http://localhost:8000/docs
 
-## Principais endpoints
+## Main endpoints
 
-GET /fazendas/{id}
-GET /fazendas/cod-imovel/{cod_imovel}
-POST /fazendas/busca-ponto
-POST /fazendas/busca-raio
+GET /farms/{id}
+GET /farms/property-code/{property_code}
+POST /farms/search-point
+POST /farms/search-radius

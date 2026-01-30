@@ -4,19 +4,19 @@ from sqlalchemy import text
 
 from ..core.database import get_db
 from ..schemas.fazenda import (
-    FazendaResponse,
-    BuscaPontoRequest,
-    BuscaRaioRequest,
+    FarmResponse,
+    SearchPointRequest,
+    SearchRadiusRequest,
 )
 
 router = APIRouter(
-    prefix="/fazendas",
-    tags=["Fazendas"]
+    prefix="/farms",
+    tags=["Farms"]
 )
 
 
-@router.get("/{id}", response_model=FazendaResponse)
-def buscar_fazenda_por_id(
+@router.get("/{id}", response_model=FarmResponse)
+def search_farm_by_id(
     id: int,
     db: Session = Depends(get_db)
 ):
@@ -36,15 +36,15 @@ def buscar_fazenda_por_id(
     if not result:
         raise HTTPException(
             status_code=404,
-            detail="Fazenda não encontrada"
+            detail="Farm not found"
         )
 
     return result
 
 
-@router.get("/cod-imovel/{cod_imovel}", response_model=FazendaResponse)
-def buscar_fazenda_por_cod_imovel(
-    cod_imovel: str,
+@router.get("/property-code/{property_code}", response_model=FarmResponse)
+def search_farm_by_property_code(
+    property_code: str,
     db: Session = Depends(get_db)
 ):
     sql = text("""
@@ -55,30 +55,30 @@ def buscar_fazenda_por_cod_imovel(
             num_area,
             shape
         FROM gis.primeira
-        WHERE cod_imovel = :cod_imovel
+        WHERE cod_imovel = :property_code
         LIMIT 1
     """)
 
     result = db.execute(
         sql,
-        {"cod_imovel": cod_imovel}
+        {"property_code": property_code}
     ).fetchone()
 
     if not result:
         raise HTTPException(
             status_code=404,
-            detail="Fazenda não encontrada"
+            detail="Farm not found"
         )
 
     return result
 
 
 @router.post(
-    "/busca-ponto",
-    response_model=list[FazendaResponse]
+    "/search-point",
+    response_model=list[FarmResponse]
 )
-def buscar_fazendas_por_ponto(
-    payload: BuscaPontoRequest,
+def search_farms_by_point(
+    payload: SearchPointRequest,
     db: Session = Depends(get_db)
 ):
     offset = (payload.page - 1) * payload.page_size
@@ -115,14 +115,14 @@ def buscar_fazendas_por_ponto(
 
 
 @router.post(
-    "/busca-raio",
-    response_model=list[FazendaResponse]
+    "/search-radius",
+    response_model=list[FarmResponse]
 )
-def buscar_fazendas_por_raio(
-    payload: BuscaRaioRequest,
+def search_farms_by_radius(
+    payload: SearchRadiusRequest,
     db: Session = Depends(get_db)
 ):
-    raio_metros = payload.raio_km * 1000
+    radius_meters = payload.radius_km * 1000
     offset = (payload.page - 1) * payload.page_size
 
     sql = text("""
@@ -138,7 +138,7 @@ def buscar_fazendas_por_raio(
                 ST_MakePoint(:lng, :lat),
                 4326
             )::geography,
-            :raio
+            :radius
         )
         ORDER BY id
         LIMIT :limit OFFSET :offset
@@ -149,7 +149,7 @@ def buscar_fazendas_por_raio(
         {
             "lat": payload.latitude,
             "lng": payload.longitude,
-            "raio": raio_metros,
+            "radius": radius_meters,
             "limit": payload.page_size,
             "offset": offset,
         }

@@ -20,7 +20,7 @@ services:
 
   seed:
     build: ./db/seed
-    container_name: fazendas_seed
+    container_name: farms_seed
     depends_on:
       db:
         condition: service_healthy
@@ -34,7 +34,7 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
-    container_name: fazendas_api
+    container_name: farms_api
     depends_on:
       seed:
         condition: service_completed_successfully
@@ -45,7 +45,7 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: fazendas_frontend
+    container_name: farms_frontend
     depends_on:
       - api
     ports:

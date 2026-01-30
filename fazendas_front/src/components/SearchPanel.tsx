@@ -7,38 +7,38 @@ import {
 interface Props {
   id: number
   setId: (v: number) => void
-  codImovel: string
-  setCodImovel: (v: string) => void
+  propertyCode: string
+  setPropertyCode: (v: string) => void
   lat: number
   lng: number
-  raio: number
+  radius: number
   setLat: (v: number) => void
   setLng: (v: number) => void
-  setRaio: (v: number) => void
+  setRadius: (v: number) => void
   loading: boolean
-  onBuscarPorId: () => void
-  onBuscarPorCodImovel: () => void
-  onBuscarPorPonto: () => void
-  onBuscarPorRaio: () => void
+  onSearchById: () => void
+  onSearchByPropertyCode: () => void
+  onSearchByPoint: () => void
+  onSearchByRadius: () => void
 }
 
 export function SearchPanel(props: Props) {
   const {
     id,
     setId,
-    codImovel,
-    setCodImovel,
+    propertyCode,
+    setPropertyCode,
     lat,
     lng,
-    raio,
+    radius,
     setLat,
     setLng,
-    setRaio,
+    setRadius,
     loading,
-    onBuscarPorId,
-    onBuscarPorCodImovel,
-    onBuscarPorPonto,
-    onBuscarPorRaio,
+    onSearchById,
+    onSearchByPropertyCode,
+    onSearchByPoint,
+    onSearchByRadius,
   } = props
 
   return (
@@ -54,26 +54,26 @@ export function SearchPanel(props: Props) {
         <Button
           variant="outlined"
           disabled={loading}
-          onClick={onBuscarPorId}
+          onClick={onSearchById}
         >
-          Buscar por ID
+          Search by ID
         </Button>
       </Stack>
 
       <Stack direction="row" spacing={2}>
         <TextField
-          label="Código do Imóvel"
-          value={codImovel}
-          onChange={(e) => setCodImovel(e.target.value)}
+          label="Property Code"
+          value={propertyCode}
+          onChange={(e) => setPropertyCode(e.target.value)}
           size="small"
           fullWidth
         />
         <Button
           variant="outlined"
-          disabled={loading || !codImovel}
-          onClick={onBuscarPorCodImovel}
+          disabled={loading || !propertyCode}
+          onClick={onSearchByPropertyCode}
         >
-          Buscar
+          Search
         </Button>
       </Stack>
 
@@ -95,26 +95,26 @@ export function SearchPanel(props: Props) {
         <Button
           variant="outlined"
           disabled={loading}
-          onClick={onBuscarPorPonto}
+          onClick={onSearchByPoint}
         >
-          Buscar por ponto
+          Search by point
         </Button>
       </Stack>
 
       <Stack direction="row" spacing={2}>
         <TextField
-          label="Raio (km)"
+          label="Radius (km)"
           type="text"
-          value={raio}
-          onChange={(e) => setRaio(Number(e.target.value))}
+          value={radius}
+          onChange={(e) => setRadius(Number(e.target.value))}
           size="small"
         />
         <Button
           variant="outlined"
           disabled={loading}
-          onClick={onBuscarPorRaio}
+          onClick={onSearchByRadius}
         >
-          Buscar por raio
+          Search by radius
         </Button>
       </Stack>
     </Stack>

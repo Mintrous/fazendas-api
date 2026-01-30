@@ -2,11 +2,11 @@ from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
 from .core.database import check_db
-from .routers.fazendas import router as fazendas_router
+from .routers.farms import router as farms_router
 
 app = FastAPI(
-    title="API de Fazendas",
-    description="API geoespacial para consulta de fazendas",
+    title="Farm API",
+    description="Geospatial API for farm queries",
     version="1.0.0",
 )
 
@@ -18,8 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Registro dos routers
-app.include_router(fazendas_router)
+# Register routers
+app.include_router(farms_router)
 
 
 @app.get("/health", status_code=status.HTTP_200_OK)

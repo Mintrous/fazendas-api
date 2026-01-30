@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+sqlalchemy
+geoalchemy2
+psycopg2-binary
+pydantic
+python-dotenv
+pytest
+httpx
+
+# Geo
+geopandas
+shapely
+fiona
+pyproj

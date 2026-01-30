@@ -18,8 +18,8 @@ services:
 
   seed:
     build:
-      context: ./fazendas_api/db/seed
-    container_name: fazendas_seed
+      context: ./farms_api/db/seed
+    container_name: farms_seed
     depends_on:
       db:
         condition: service_healthy
@@ -31,9 +31,9 @@ services:
 
   api:
     build:
-      context: ./fazendas_api
+      context: ./farms_api
       dockerfile: docker/Dockerfile
-    container_name: fazendas_api
+    container_name: farms_api
     depends_on:
       seed:
         condition: service_completed_successfully
@@ -42,13 +42,13 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./fazendas_api:/app
+      - ./farms_api:/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:
     build:
-      context: ./fazendas_front
-    container_name: fazendas_frontend
+      context: ./farms_front
+    container_name: farms_frontend
     ports:
       - "3000:80"
     depends_on:

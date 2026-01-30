@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path
 import gdown
 
-GOOGLE_DRIVE_FILE_ID = "15ghpnwzdDhFqelouqvQwXlbzovtPhlFe"
+GOOGLE_DRIVE_FILE_ID = "198cVwTs5wsrVgsJrc_z2NgL_r65rrzUl"
 
 ZIP_PATH = "/seed/data.zip"
 EXTRACT_DIR = "/seed/data"
@@ -28,12 +28,12 @@ SRID = 4326
 
 
 def wait_for_db():
-    print("Aguardando banco ficar disponível...")
+    print("Waiting for database to become available...")
     while True:
         try:
             conn = connect(**DB_PARAMS)
             conn.close()
-            print("Banco disponível.")
+            print("Database available.")
             break
         except OperationalError:
             time.sleep(2)
@@ -41,22 +41,22 @@ def wait_for_db():
 
 def download_and_extract():
     if Path(SHAPEFILE_PATH).exists():
-        print("Dados já disponíveis, pulando download.")
+        print("Data already available, skipping download.")
         return
 
-    print("Baixando dados geoespaciais do Google Drive...")
+    print("Downloading geospatial data from Google Drive...")
     gdown.download(
         id=GOOGLE_DRIVE_FILE_ID,
         output=ZIP_PATH,
         quiet=False
     )
 
-    print("Extraindo arquivos...")
+    print("Extracting files...")
     os.makedirs(EXTRACT_DIR, exist_ok=True)
     with zipfile.ZipFile(ZIP_PATH, "r") as zip_ref:
         zip_ref.extractall(EXTRACT_DIR)
 
-    print("Download e extração concluídos.")
+    print("Download and extraction completed.")
 
 
 def pg_type(dtype):
@@ -74,14 +74,14 @@ def main():
     wait_for_db()
     download_and_extract()
 
-    print("Lendo shapefile...")
+    print("Reading shapefile...")
     gdf = gpd.read_file(SHAPEFILE_PATH)
 
     if gdf.crs is None:
-        raise RuntimeError("Shapefile sem CRS definido")
+        raise RuntimeError("Shapefile without CRS defined")
 
     if gdf.crs.to_epsg() != SRID:
-        print("Reprojetando shapefile para EPSG:4326...")
+        print("Reprojecting shapefile to EPSG:4326...")
         gdf = gdf.to_crs(epsg=SRID)
 
     with connect(**DB_PARAMS) as conn:
@@ -133,7 +133,7 @@ def main():
 
             conn.commit()
 
-    print("Banco populado com sucesso.")
+    print("Database populated successfully.")
 
 
 if __name__ == "__main__":
