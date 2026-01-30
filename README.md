@@ -22,6 +22,7 @@ The entire environment is orchestrated with **Docker Compose**, including **auto
 ## Access
 
 Frontend: http://localhost:3000
+
 API (Swagger): http://localhost:8000/docs
 
 ## Main endpoints
