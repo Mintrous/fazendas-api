@@ -1,34 +1,130 @@
-# Farm search with geospatial data
+# Geospatial Farm Search API
 
-The application uses **FastAPI + PostgreSQL/PostGIS** in the backend and **React (Vite)** in the frontend.  
-The system allows searching for farms by **ID**, **property code**, **geographic point**, or **geographic point + radius in kilometers**.
+A RESTful API built with **FastAPI + PostgreSQL/PostGIS** to perform spatial queries on rural property data.
 
-The entire environment is orchestrated with **Docker Compose**, including **automatic seed** of geospatial data.
+This project was developed to explore **geospatial data modeling**, **spatial indexing**, and advanced SQL queries using the **PostGIS** extension.
+
+The API enables spatial search operations such as point containment and radius-based proximity queries directly at the database level.
 
 ---
 
-## Prerequisites
+## Architecture Overview
+
+- **Backend:** FastAPI
+- **Database:** PostgreSQL with PostGIS extension
+- **ORM:** SQLAlchemy
+- **Containerization:** Docker & Docker Compose
+- **Data Initialization:** Automatic geospatial seed on startup
+
+The entire environment is orchestrated via Docker Compose, including database setup, PostGIS activation, and dataset population.
+
+---
+
+## Project Goals
+
+The primary objective of this project was to:
+
+- Model and store geospatial geometries in PostgreSQL
+- Use PostGIS spatial functions for querying
+- Implement efficient spatial search endpoints
+- Apply spatial indexing for performance optimization
+- Work with SRIDs and coordinate reference systems
+- Execute raw and ORM-based spatial queries
+
+---
+
+## Geospatial Concepts Applied
+
+- Geometry storage (Polygon / MultiPolygon)
+- SRID configuration
+- Spatial indexing (GiST indexes)
+- Distance-based filtering
+- Point-in-polygon queries
+- Coordinate manipulation
+
+### Core PostGIS Functions Used
+
+`ST_SetSRID`, `ST_MakePoint`, `ST_DWithin`, `ST_Contains`;
+
+All spatial logic is executed at the database layer.
+
+---
+
+## API Capabilities
+
+- Retrieve a farm by internal ID
+- Retrieve a farm by property code
+- Check which farm contains a given geographic point
+- Search farms within a given radius (in kilometers) from a geographic point
+
+All responses are JSON-based and documented via Swagger.
+
+---
+
+## Running the Project
+
+### Prerequisites
 
 - Docker
 - Docker Compose
 
----
+### Steps
 
-## How to run the project
+Clone the repository:
 
-1. Clone the repository
-2. Start the entire application with: `docker compose up --build`
+```bash
+git clone https://github.com/Mintrous/geospatial-api.git
+cd farms-api
+docker compose up --build
+```
 
-## Access
+### This will:
 
-Frontend: http://localhost:3000
+- Start PostgreSQL with PostGIS enabled
+- Automatically run database migrations
+- Seed the database with geospatial farm data
+- Start the FastAPI server
 
-API (Swagger): http://localhost:8000/docs
+## API Documentation
 
-## Main endpoints
+### Swagger UI: 
+```
+txthttp://localhost:8000/docs
+```
 
-GET /farms/{id}
-GET /farms/property-code/{property_code}
-POST /farms/search-point
-POST /farms/search-radius
+### Main endpoints
 
+#### Get farm by ID
+- GET /farms/{id}
+
+#### Get farm by property code
+- GET /farms/property-code/{property_code}
+
+#### Search farm by geographic point
+- POST /farms/search-point -> request body must follow this example:
+```bash
+{
+  "latitude": -18.9,
+  "longitude": -48.2
+}
+```
+
+#### Search farms by geographic point and radius
+- POST /farms/search-radius -> the request body must follow this example:
+```bash
+{
+  "latitude": -18.9,
+  "longitude": -48.2,
+  "radius_km": 10
+}
+```
+
+## Data model
+<img width="294" height="326" alt="image" src="https://github.com/user-attachments/assets/e78d1121-8913-4408-846e-611978a8d1f0" />
+
+### Example of farms territory delimitations visualization:
+<img width="1466" height="781" alt="image" src="https://github.com/user-attachments/assets/13aed293-5dfe-4fdd-a590-bb27bad4bfd6" />
+
+## Project motivation
+
+This project was built as a practical exploration of: spatial databases and queries, PostGIS internals, backend API design with FastAPI, containerized database environments
