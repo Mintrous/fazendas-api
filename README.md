@@ -15,6 +15,7 @@ The API enables spatial search operations such as point containment and radius-b
 - **ORM:** SQLAlchemy
 - **Containerization:** Docker & Docker Compose
 - **Data Initialization:** Automatic geospatial seed on startup
+- **Frontend:** React (Vite)
 
 The entire environment is orchestrated via Docker Compose, including database setup, PostGIS activation, and dataset population.
 
@@ -24,12 +25,10 @@ The entire environment is orchestrated via Docker Compose, including database se
 
 The primary objective of this project was to:
 
-- Model and store geospatial geometries in PostgreSQL
-- Use PostGIS spatial functions for querying
-- Implement efficient spatial search endpoints
+- Model and store geospatial geometries in PostgreSQL with PostGIS extension
+- Explore and use PostGIS spatial functions for querying
 - Apply spatial indexing for performance optimization
 - Work with SRIDs and coordinate reference systems
-- Execute raw and ORM-based spatial queries
 
 ---
 
@@ -40,7 +39,6 @@ The primary objective of this project was to:
 - Spatial indexing (GiST indexes)
 - Distance-based filtering
 - Point-in-polygon queries
-- Coordinate manipulation
 
 ### Core PostGIS Functions Used
 
@@ -70,8 +68,6 @@ All responses are JSON-based and documented via Swagger.
 
 ### Steps
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/Mintrous/geospatial-api.git
 cd farms-api
@@ -89,7 +85,7 @@ docker compose up --build
 
 ### Swagger UI: 
 ```
-txthttp://localhost:8000/docs
+http://localhost:8000/docs
 ```
 
 ### Main endpoints
@@ -128,3 +124,4 @@ txthttp://localhost:8000/docs
 ## Project motivation
 
 This project was built as a practical exploration of: spatial databases and queries, PostGIS internals, backend API design with FastAPI, containerized database environments
+
