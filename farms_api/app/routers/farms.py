@@ -122,7 +122,8 @@ def search_farms_by_radius(
     payload: SearchRadiusRequest,
     db: Session = Depends(get_db)
 ):
-    radius_meters = payload.radius_km * 1000
+    # converting radius from km to degrees (111 km is aprox 1 degree at SRID 4326)
+    radius_degrees = payload.radius_km / 111.0
     offset = (payload.page - 1) * payload.page_size
 
     sql = text("""
@@ -133,11 +134,11 @@ def search_farms_by_radius(
             num_area
         FROM gis.primeira
         WHERE ST_DWithin(
-            shape::geography,
+            shape,
             ST_SetSRID(
                 ST_MakePoint(:lng, :lat),
                 4326
-            )::geography,
+            ),
             :radius
         )
         ORDER BY id
@@ -149,7 +150,7 @@ def search_farms_by_radius(
         {
             "lat": payload.latitude,
             "lng": payload.longitude,
-            "radius": radius_meters,
+            "radius": radius_degrees,
             "limit": payload.page_size,
             "offset": offset,
         }
